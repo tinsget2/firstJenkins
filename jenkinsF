@@ -6,26 +6,15 @@ pipeline {
     }
     
     stages {
-        checkout([ 
-    $class: 'GitSCM', 
-    branches: [[name: '*/develop']], 
-    doGenerateSubmoduleConfigurations: false, 
-    extensions: [
-        [ 
-        $class: 'SubmoduleOption', 
-        depth: 1, 
-        disableSubmodules: false, 
-        parentCredentials: true, 
-        recursiveSubmodules: true, 
-        reference: '', 
-        shallow: true, 
-        trackingSubmodules: false
-        ], 
-        [$class: 'GitLFSPull']
-    ], 
-    submoduleCfg: [], 
-    userRemoteConfigs: [[ credentialsId: '$creds', url: 'https://github.com/tinsget2/firstJenkins.git']]
-    ]);
+        stage('Checkout external proj') {
+            steps {
+                git branch: './master',
+                    credentialsId: 'Private',
+                    url: 'https://github.com/tinsget2/firstJenkins.git'
+
+                sh "ls -lat"
+            }
+        }
         stage('Build') {
             steps {
                 javac HelloWorld.java
