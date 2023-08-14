@@ -4,6 +4,26 @@ pipeline {
         // Timeout counter starts AFTER agent is allocated
         timeout(time: 1, unit: 'SECONDS')
     }
+    checkout([ 
+    $class: 'GitSCM', 
+    branches: [[name: '*/develop']], 
+    doGenerateSubmoduleConfigurations: false, 
+    extensions: [
+        [ 
+        $class: 'SubmoduleOption', 
+        depth: 1, 
+        disableSubmodules: false, 
+        parentCredentials: true, 
+        recursiveSubmodules: true, 
+        reference: '', 
+        shallow: true, 
+        trackingSubmodules: false
+        ], 
+        [$class: 'GitLFSPull']
+    ], 
+    submoduleCfg: [], 
+    userRemoteConfigs: [[ credentialsId: '$creds', url: 'https://github.com/tinsget2/firstJenkins.git']]
+    ]);
     stages {
         stage('Build') {
             steps {
