@@ -5,22 +5,14 @@ pipeline {
         timeout(time: 1, unit: 'SECONDS')
     }
     stages {
-        // stage('Example') {
-        //     steps {
-        //         echo 'Hello World'
-        // }
-
-        stage('Java') {
+        stage('Build') {
             steps {
-                javac HelloWorld.java
-                
+                javac BubbleSort.java
             }
         }
-
         stage('Run') {
             steps {
-                java HelloWorld
-                
+                java BubbleSort
             }
         }
     }
