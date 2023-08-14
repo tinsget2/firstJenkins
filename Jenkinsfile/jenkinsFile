@@ -7,7 +7,13 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                echo 'Hello World'
+                step{
+                    echo 'Hello World'
+                }
+                step{
+                    javac HelloWorld.java
+                    java HelloWorld
+                }
             }
         }
     }
